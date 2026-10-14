@@ -23,6 +23,10 @@ namespace Yanbaev_Autoservice
         public ServicePage()
         {
             InitializeComponent();
+
+            var currentServices = Yanbaev_AvtoservisEntities.GetContext().Service.ToList();
+            ServiceListView.ItemsSource = currentServices;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
