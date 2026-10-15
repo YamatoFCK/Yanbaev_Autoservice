@@ -26,12 +26,28 @@ namespace Yanbaev_Autoservice
 
             var currentServices = Yanbaev_AvtoservisEntities.GetContext().Service.ToList();
             ServiceListView.ItemsSource = currentServices;
+            ComboType.SelectedIndex = 0;
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new AddEditPage());
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RButtonUp_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RButtonDown_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
