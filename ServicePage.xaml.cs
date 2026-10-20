@@ -66,8 +66,6 @@ namespace Yanbaev_Autoservice
                 currentServices = currentServices.Where(p => (p.Discount >= 0.70 && p.Discount < 1.00)).ToList();
             }
 
-
-
             currentServices = currentServices.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
 
             if (RButtonDown.IsChecked.Value)
@@ -99,7 +97,7 @@ namespace Yanbaev_Autoservice
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage(null));
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -118,5 +116,23 @@ namespace Yanbaev_Autoservice
             UpdateServices();
         }
 
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Service));
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                Yanbaev_AvtoservisEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                ServiceListView.ItemsSource = Yanbaev_AvtoservisEntities.GetContext().Service.ToList();
+            }
+        }
     }
 }
