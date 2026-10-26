@@ -20,6 +20,14 @@ namespace Yanbaev_Autoservice
     /// </summary>
     public partial class ServicePage : Page
     {
+        int CountRecords;
+        int CountPage;
+        int CurrentPage = 0;
+
+        List<Service> CurrentPageList = new List<Service>();
+        List<Service> TableList; 
+
+
         public ServicePage()
         {
             InitializeComponent();
@@ -79,8 +87,108 @@ namespace Yanbaev_Autoservice
             }
 
             ServiceListView.ItemsSource = currentServices;
+            TableList = currentServices;
+            ChangePage(0, 0);
 
 
+        }
+
+        private void ChangePage(int direction, int? selectedPage)
+        {
+            CurrentPageList.Clear();
+            CountRecords = TableList.Count;
+
+            if (CountRecords % 10 > 0)
+            {
+                CountPage = CountRecords / 10 + 1;
+            }
+            else
+            {
+                CountPage = CountRecords / 10;
+            }
+
+            bool Ifupdate = true;
+            int min;
+
+            if (selectedPage.HasValue)
+            {
+                if (selectedPage >= 0 && selectedPage < CountPage)
+                {
+                    CurrentPage = (int)selectedPage;
+                    min = CurrentPage * 10 + 10 < CountRecords
+                        ? CurrentPage * 10 + 10 : CountRecords;
+
+                    for (int i = CurrentPage * 10; i < min; i++)
+                    {
+                        CurrentPageList.Add(TableList[i]);
+                    }
+                }
+                else
+                {
+                    Ifupdate = false;
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 1:
+                        if (CurrentPage > 0)
+                        {
+                            CurrentPage--;
+                            min = CurrentPage * 10 + 10 < CountRecords
+                                ? CurrentPage * 10 + 10 : CountRecords;
+
+                            for (int i = CurrentPage * 10; i < min; i++)
+                            {
+                                CurrentPageList.Add(TableList[i]);
+                            }
+                        }
+                        else
+                        {
+                            Ifupdate = false;
+                        }
+                        break;
+
+                    case 2:
+                        if (CurrentPage < CountPage - 1)
+                        {
+                            CurrentPage++;
+                            min = CurrentPage * 10 + 10 < CountRecords
+                                ? CurrentPage * 10 + 10 : CountRecords;
+
+                            for (int i = CurrentPage * 10; i < min; i++)
+                            {
+                                CurrentPageList.Add(TableList[i]);
+                            }
+                        }
+                        else
+                        {
+                            Ifupdate = false;
+                        }
+                        break;
+                }
+            }
+
+            if (Ifupdate)
+            {
+                PageListBox.Items.Clear();
+
+                for (int i = 1; i <= CountPage; i++)
+                {
+                    PageListBox.Items.Add(i);
+                }
+
+                PageListBox.SelectedIndex = CurrentPage;
+
+
+                ServiceListView.ItemsSource = CurrentPageList;
+                ServiceListView.Items.Refresh();
+
+                min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                TBCount.Text = min.ToString();
+                TBALLRecords.Text = " из " + CountRecords.ToString();
+            }
         }
 
 
@@ -131,8 +239,59 @@ namespace Yanbaev_Autoservice
             if (Visibility == Visibility.Visible)
             {
                 Yanbaev_AvtoservisEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                ServiceListView.ItemsSource = Yanbaev_AvtoservisEntities.GetContext().Service.ToList();
+                UpdateServices();   
             }
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var currentService = (sender as Button).DataContext as Service;
+
+            var currentClientServices = Yanbaev_AvtoservisEntities.GetContext().ClientService.ToList();
+            currentClientServices = currentClientServices.Where(p => p.ServiceID == currentService.ID).ToList();
+
+            if (currentClientServices.Count != 0)
+            {
+                MessageBox.Show("Невозможно выполнить удаление, так как существует запись на эту услугу");
+            }
+            else
+            {
+                if (MessageBox.Show("Вы точно хотите удалить услугу?",
+                    "Внимание", MessageBoxButton.YesNo,
+                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Yanbaev_AvtoservisEntities.GetContext().Service.Remove(currentService);
+                        Yanbaev_AvtoservisEntities.GetContext().SaveChanges();
+
+                        UpdateServices();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
+        }
+        private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (PageListBox.SelectedItem != null) 
+            {
+                ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
+            }
+        }
+
+        private void LeftDirButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(1, null);
+        }
+
+        private void RightDirButon_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(2, null);
+        }
+
+        
     }
 }
