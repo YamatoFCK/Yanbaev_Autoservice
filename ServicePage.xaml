@@ -52,8 +52,17 @@
                          Checked="RButtonDown_Checked">
             </RadioButton>
         </StackPanel>
-        
-                    
+
+
+        <Button Content="Добавить" Name="AddButton"
+        Click="AddButton_Click"
+        Grid.Row="1"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Width="120" Height="30"
+        Margin="10"/>
+
+
         <ListView Name="ServiceListView" Grid.Row="2">
                         
             <ListView.ItemTemplate>
