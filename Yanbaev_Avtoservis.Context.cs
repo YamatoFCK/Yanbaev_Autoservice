@@ -15,14 +15,12 @@ namespace Yanbaev_Autoservice
     
     public partial class Yanbaev_AvtoservisEntities : DbContext
     {
-
         private static Yanbaev_AvtoservisEntities _context;
 
         public static Yanbaev_AvtoservisEntities GetContext()
         {
             if (_context == null)
                 _context = new Yanbaev_AvtoservisEntities();
-
             return _context;
         }
 
@@ -46,6 +44,7 @@ namespace Yanbaev_Autoservice
         public virtual DbSet<ProductSale> ProductSale { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<ServicePhoto> ServicePhoto { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
     }
 }

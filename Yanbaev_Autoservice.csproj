@@ -191,56 +191,62 @@
       <DependentUpon>AddEditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Client.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="ClientService.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="DocumentByService.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="Gender.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="Manufacturer.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductPhoto.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductSale.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="Service.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="ServicePage.xaml.cs">
       <DependentUpon>ServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServicePhoto.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpPage.xaml.cs">
+      <DependentUpon>SignUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
     <Compile Include="Tag.cs">
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
-    <Compile Include="YanbaevModel.Context.cs">
+    <Compile Include="Yanbaev_Avtoservis.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>YanbaevModel.Context.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="YanbaevModel.cs">
+    <Compile Include="Yanbaev_Avtoservis.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>YanbaevModel.tt</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.tt</DependentUpon>
     </Compile>
-    <Compile Include="YanbaevModel.Designer.cs">
+    <Compile Include="Yanbaev_Avtoservis.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>YanbaevModel.edmx</DependentUpon>
+      <DependentUpon>Yanbaev_Avtoservis.edmx</DependentUpon>
     </Compile>
     <Page Include="AddEditPage.xaml">
       <SubType>Designer</SubType>
@@ -259,6 +265,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ServicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -286,12 +296,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="YanbaevModel.edmx">
+    <EntityDeploy Include="Yanbaev_Avtoservis.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>YanbaevModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Yanbaev_Avtoservis.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="YanbaevModel.edmx.diagram">
-      <DependentUpon>YanbaevModel.edmx</DependentUpon>
+    <None Include="Yanbaev_Avtoservis.edmx.diagram">
+      <DependentUpon>Yanbaev_Avtoservis.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -334,19 +344,21 @@
     <Resource Include="Услуги автосервиса\Шиномонтаж.jpg" />
     <Resource Include="Услуги автосервиса\Электрика.png" />
     <Resource Include="res\picture.png" />
-    <Content Include="YanbaevModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>YanbaevModel.Context.cs</LastGenOutput>
-      <DependentUpon>YanbaevModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="YanbaevModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>YanbaevModel.edmx</DependentUpon>
-      <LastGenOutput>YanbaevModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Yanbaev_Avtoservis.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Yanbaev_Avtoservis.edmx</DependentUpon>
+      <LastGenOutput>Yanbaev_Avtoservis.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Yanbaev_Avtoservis.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Yanbaev_Avtoservis.edmx</DependentUpon>
+      <LastGenOutput>Yanbaev_Avtoservis.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Data.SqlClient.SNI.7.1.0\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('packages\Microsoft.Data.SqlClient.SNI.7.1.0\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />

@@ -42,10 +42,10 @@ namespace Yanbaev_Autoservice
             if (_currentService.Cost == 0)
                 errors.AppendLine("Укажите стоимость услуги");
 
-            if (!_currentService.Discount.HasValue)
-                errors.AppendLine("Укажите скидку");
+            if (_currentService.DiscountInt < 0 || _currentService.DiscountInt > 100)
+                errors.AppendLine("Скидка должна быть от 0 до 100");
 
-            if (string.IsNullOrWhiteSpace(_currentService.Duration))
+            if (_currentService.Duration <= 0)
                 errors.AppendLine("Укажите длительность услуги");
 
             if (errors.Length > 0)
