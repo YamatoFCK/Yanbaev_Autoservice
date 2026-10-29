@@ -64,38 +64,52 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Margin="5" />
-        <TextBox Grid.Column="1" Grid.Row="0" Height="30" FontSize="20"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Height="30" Width="200" 
-                 FontSize="20" 
-                 HorizontalAlignment="Left"/>
-        <ComboBox Name="ComboClient" Grid.Column="1" Grid.Row="2" 
-                  Height="30" Width="300" FontSize="15"
-                  HorizontalAlignment="Left"/>
-        <DatePicker Name="StarDate"  Grid.Column="1" Grid.Row="3" Height="30" 
+
+        <TextBox Grid.Column="1" Grid.Row="0"
+                 Height="30" FontSize="20"
+                 Text="{Binding Title}"
+                 IsEnabled="False"/>
+
+
+        <TextBox Grid.Column="1" Grid.Row="1"
+                 Height="30" Width="200"
+                 FontSize="20"
+                 HorizontalAlignment="Left"
+                 Text="{Binding Duration}"
+                 IsEnabled="False"/>
+
+
+        <ComboBox Name="ComboClient"
+                  Grid.Column="1" Grid.Row="2"
+                  Height="30" Width="300"
+                  FontSize="15"
+                  HorizontalAlignment="Left">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding LastName}" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding FirstName}" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Patronymic}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+
+        <DatePicker Name="StartDate"  Grid.Column="1" Grid.Row="3" Height="30" 
                     Width="200" FontSize="20" HorizontalAlignment="Left"/>
         <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal">
-            <TextBox Name="TBStart" Height="30" Width="200" FontSize="20"/>
+            
+            <TextBox Name="TBStart" Height="30" Width="200" FontSize="20" TextChanged="TBStart_TextChanged" /> 
             <TextBlock Text="Время окончания" FontSize="15" Height="30"
                        Margin="20"></TextBlock>
-            <TextBox Name="TBEnd" Height="30" Width="200" FontSize="20"/>
+            <TextBox Name="TBEnd" Height="30" Width="200" FontSize="20" IsReadOnly="True"/>
         </StackPanel>
         <Button Name="SaveButton" Content="Сохранить"
                 Grid.Row="5" Grid.Column="0"
                 Grid.ColumnSpan="2" Width="150"
                 Click="SaveButton_Click" >
         </Button>
-
-        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-            <Button Name="SignUpButton" Content="Запустить" Margin="2" 
-                    Click="SignUpButton_Click"></Button
-            <Button Name="DeleteButton" Content="Запустить" Margin="2"
-                    Click="DeleteButton_Click" >
-            </Button
-            <Button Name="EditButton" Content="Запустить" Margin="2" 
-                    Click="EditButton_Click" >
-            </Button>
-        </StackPanel>
-                
-        
     </Grid>
 </Page>

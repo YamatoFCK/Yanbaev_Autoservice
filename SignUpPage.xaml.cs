@@ -20,29 +20,88 @@ namespace Yanbaev_Autoservice
     /// </summary>
     public partial class SignUpPage : Page
     {
-        public SignUpPage()
+        private Service _currentService = new Service();
+        private ClientService _currentClientService = new ClientService();
+
+        public SignUpPage(Service SelectedService)
         {
             InitializeComponent();
+
+            if (SelectedService != null)
+                _currentService = SelectedService;
+
+            DataContext = _currentService;
+            ComboClient.ItemsSource = Yanbaev_AvtoservisEntities.GetContext().Client.ToList();
         }
+
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            StringBuilder errors = new StringBuilder();
 
+            if (ComboClient.SelectedItem == null)
+                errors.AppendLine("Укажите ФИО клиента");
+
+            if (StartDate.SelectedDate == null)
+                errors.AppendLine("Укажите дату услуги");
+
+            if (string.IsNullOrWhiteSpace(TBStart.Text))
+                errors.AppendLine("Укажите время начала услуги");
+
+            DateTime time;
+            if (!DateTime.TryParseExact(TBStart.Text, "HH:mm",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out time))
+                errors.AppendLine("Введите время в формате ЧЧ:ММ");
+
+            if (errors.Length > 0)
+            {
+                MessageBox.Show(errors.ToString());
+                return;
+            }
+
+            _currentClientService.ClientID =
+                (ComboClient.SelectedItem as Client).ID;
+
+            _currentClientService.ServiceID = _currentService.ID;
+
+            _currentClientService.StartTime =
+                StartDate.SelectedDate.Value.Date.Add(time.TimeOfDay);
+
+            if (_currentClientService.ID == 0)
+                Yanbaev_AvtoservisEntities.GetContext().ClientService.Add(_currentClientService);
+
+            try
+            {
+                Yanbaev_AvtoservisEntities.GetContext().SaveChanges();
+                MessageBox.Show("Информация сохранена");
+                Manager.MainFrame.GoBack();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+
+        private void TBStart_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (TBEnd == null)
+                return;
 
+            DateTime startTime;
+
+            if (DateTime.TryParseExact(TBStart.Text, "HH:mm",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out startTime))
+            {
+                TBEnd.Text = startTime.AddMinutes(_currentService.Duration).ToString("HH:mm");
+            }
+            else
+            {
+                TBEnd.Text = "";
+            }
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
