@@ -103,5 +103,30 @@ namespace Yanbaev_Autoservice
             }
         }
 
+        private void TBStart_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !e.Text.All(c =>
+                (c >= '0' && c <= '9') || c == ':');
+        }
+
+        private void TBStart_Pasting(
+            object sender,
+            DataObjectPastingEventArgs e)
+        {
+            if (!e.DataObject.GetDataPresent(DataFormats.UnicodeText))
+            {
+                e.CancelCommand();
+                return;
+            }
+
+            string text =
+                e.DataObject.GetData(DataFormats.UnicodeText) as string;
+
+            if (string.IsNullOrEmpty(text) ||
+                text.Any(c => (c < '0' || c > '9') && c != ':'))
+            {
+                e.CancelCommand();
+            }
+        }
     }
 }

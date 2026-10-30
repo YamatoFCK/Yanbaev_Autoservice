@@ -40,6 +40,36 @@ namespace Yanbaev_Autoservice
             }
         }
 
+        public string OldCost
+        {
+            get
+            {
+                if (Discount > 0)
+                    return Cost.ToString("0.##");
+                else
+                    return "";
+            }
+        }
+
+        public decimal NewCost
+        {
+            get
+            {
+                return Cost - Cost * (decimal)Discount;
+            }
+        }
+
+        public System.Windows.Media.SolidColorBrush FonStyle
+        {
+            get
+            {
+                if (Discount > 0)
+                    return System.Windows.Media.Brushes.LightGreen;
+                else
+                    return System.Windows.Media.Brushes.White;
+            }
+        }
+
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

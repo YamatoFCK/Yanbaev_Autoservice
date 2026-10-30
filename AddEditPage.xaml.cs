@@ -39,14 +39,27 @@ namespace Yanbaev_Autoservice
             if (string.IsNullOrWhiteSpace(_currentService.Title))
                 errors.AppendLine("Укажите название услуги");
 
-            if (_currentService.Cost == 0)
-                errors.AppendLine("Укажите стоимость услуги");
+            if (_currentService.Duration <= 0 || _currentService.Duration > 240)
+                errors.AppendLine("Длительность должна быть от 1 до 240 минут");
 
             if (_currentService.DiscountInt < 0 || _currentService.DiscountInt > 100)
                 errors.AppendLine("Скидка должна быть от 0 до 100");
 
             if (_currentService.Duration <= 0)
                 errors.AppendLine("Укажите длительность услуги");
+
+            if (!string.IsNullOrWhiteSpace(_currentService.Title))
+            {
+                string title = _currentService.Title.Trim();
+
+                bool exists = Yanbaev_AvtoservisEntities.GetContext().Service.ToList()
+                    .Any(p => p.ID != _currentService.ID &&
+                              p.Title != null &&
+                              string.Equals(p.Title.Trim(), title, StringComparison.OrdinalIgnoreCase));
+
+                if (exists)
+                    errors.AppendLine("Уже существует такая услуга");
+            }
 
             if (errors.Length > 0)
             {
